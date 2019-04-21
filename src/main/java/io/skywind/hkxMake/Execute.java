@@ -1,9 +1,7 @@
 package io.skywind.hkxMake;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-
-import org.apache.commons.io.IOUtils;
+import java.util.Arrays;
 
 public class Execute {
 
@@ -24,13 +22,18 @@ public class Execute {
 	 * @param log redirect process input stream to console
 	 * @return instance of the process started or {@code null} if an error occurred
 	 */
-	public static Process start(String process, String[] args, boolean wait, boolean log) {
+	public static Process start(String process, boolean wait, boolean log, String...args) {
 		
-		Logger.print(Logger.Level.DEBUG, "Starting new process %s" + 
-				((wait) ? " and waiting for it to terminate" : ""), process);
-		try {
-			String command = process + ((args != null) ? " " + String.join(" ", args) : "");
-			ProcessBuilder builder = new ProcessBuilder(command);
+		try {			
+			Logger.print(Logger.Level.DEBUG, "Starting new process %s" +
+					((wait) ? " and waiting for it to terminate" : ""), process);
+			
+			java.util.ArrayList<String> cmd = new java.util.ArrayList<String>();
+			cmd.add(process); cmd.addAll(Arrays.asList(args));
+			
+			Logger.debug("Running with arguments: " + String.join(" ", args));
+			
+			ProcessBuilder builder = new ProcessBuilder(cmd);
 			if (log == true) {
 				builder.inheritIO();
 			}
