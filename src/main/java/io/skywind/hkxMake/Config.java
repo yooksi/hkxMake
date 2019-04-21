@@ -16,13 +16,15 @@ public class Config {
 	
 	public enum Entry {
 		
-		ANIMATIONSDIR("animationsDir"),
-		OUTPUTDIR("outputDir");
+		ANIMATIONSDIR("animationsDir", 0),
+		OUTPUTDIR("outputDir", 1);
 		
 		private final String entry;
+		private final int index;
 		
-		Entry(String e) {
+		Entry(String e, int i) {
 			entry = e;
+			index = i;
 		}
 		public String get() {
 			return entry;
@@ -66,7 +68,7 @@ public class Config {
 				String line = br.readLine();
 				String[] elements = line.split("=");
 				if (elements.length != 2 || !elements[0].equals(e.entry))
-					Logger.error("Config entry is corrupt");
+					Logger.error("Config entry " + e.index + " is corrupt");
 				else {
 					String read = elements[1].replaceAll("\"", "");
 					Logger.print(Logger.Level.DEBUG, "Read config value: %s", read);
