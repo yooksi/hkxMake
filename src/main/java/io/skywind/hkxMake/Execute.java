@@ -8,6 +8,14 @@ import org.apache.commons.io.IOUtils;
 public class Execute {
 
 	/**
+	 *  This method blocks until thread execution until input data is available<br>
+	 *  User must press Enter to continue running the application
+	 */
+	public static void pause() {
+		UserInput.waitForEnter();
+	}
+	
+	/**
 	 * Use {@code ProcessBuilder} to start a new application or script process.<br>
 	 * <i>Note that if you start a console application this way it will run hidden</i>
 	 * 
