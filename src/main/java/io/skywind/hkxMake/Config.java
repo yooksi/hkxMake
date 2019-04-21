@@ -42,10 +42,10 @@ public class Config {
 			instance.createNewFile();
 			PrintWriter writer = new PrintWriter(instance);
 			for (Entry e : Entry.values()) {
-				writer.println(e.entry + "=");
+				writer.println(e.entry + "=" + "\"<path>\"");
 			}
 			writer.close();
-			Logger.print("Please setup your configuration file before you continue");
+			Logger.print("\nPlease setup your configuration file before you continue");
 			Execute.pause();	
 		} 
 		catch (IOException e) {
