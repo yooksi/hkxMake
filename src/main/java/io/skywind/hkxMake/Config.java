@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Config {
 
@@ -15,7 +16,8 @@ public class Config {
 	
 	public enum Entry {
 		
-		ANIMATIONSDIR("animationsDir");
+		ANIMATIONSDIR("animationsDir"),
+		OUTPUTDIR("outputDir");
 		
 		private final String entry;
 		
@@ -65,6 +67,7 @@ public class Config {
 					entries.put(e, read);
 				}
 			}
+			br.close();
 			return this;
 		} 
 		catch(IOException e) {
@@ -73,7 +76,10 @@ public class Config {
 		}
 	}
 	
-	public String getAnimationsDir() {
-		return entries.get(Entry.ANIMATIONSDIR);
+	public Path getAnimationsDir() {
+		return Paths.get(entries.get(Entry.ANIMATIONSDIR));
+	}
+	public Path getOuputDir() {
+		return Paths.get(entries.get(Entry.OUTPUTDIR));
 	}
 }
