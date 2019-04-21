@@ -30,7 +30,7 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'io.skywind.hkxMake'
+mainClassName = 'io.skywind.hkxMake.Main'
 
 // Change the jar build name
 shadowJar {
