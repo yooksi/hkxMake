@@ -43,8 +43,7 @@ public class Config {
 			}
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.error("Unable to create new config file", e);
 		}
 	}
 	
@@ -54,23 +53,22 @@ public class Config {
 			BufferedReader br = new BufferedReader(reader);
 			for (Entry e : Entry.values()) {
 				
-				System.out.println("DEBUG: Reading config entry: " + e.name());
+				Logger.print(Logger.Level.DEBUG, "Reading config entry: %s", e.name());
 				
 				String line = br.readLine();
 				String[] elements = line.split("=");
 				if (elements.length != 2 || !elements[0].equals(e.entry))
-					System.out.println("Error: Config entry is corrupt");
+					Logger.error("Config entry is corrupt");
 				else {
 					String read = elements[1].replaceAll("\"", "");
-					System.out.println("DEBUG: Read config value: " + read);
+					Logger.print(Logger.Level.DEBUG, "Read config value: %s", read);
 					entries.put(e, read);
 				}
 			}
 			return this;
 		} 
 		catch(IOException e) {
-			System.out.println("An IO exception occured while reading config");
-			e.printStackTrace();
+			Logger.error("An IO exception occured while reading config", e);
 			return null;
 		}
 	}
