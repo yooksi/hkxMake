@@ -35,8 +35,7 @@ public class Config {
 	}
 	
 	public static void createNew() {
-		if (instance.exists())
-			instance.delete();
+		Logger.print("Creating new config file...");
 		try {
 			instance.createNewFile();
 			PrintWriter writer = new PrintWriter(instance);
@@ -44,13 +43,20 @@ public class Config {
 				writer.println(e.entry + "=");
 			}
 			writer.close();
-		} catch (IOException e) {
+			Logger.print("Please setup your configuration file before you continue");
+			Execute.pause();	
+		} 
+		catch (IOException e) {
 			Logger.error("Unable to create new config file", e);
 		}
 	}
 	
 	public Config read() {
 		try {
+			if (!instance.exists()) {
+				Logger.print("No config file detected in root directory");
+				createNew();
+			}
 			FileReader reader = new FileReader(instance);
 			BufferedReader br = new BufferedReader(reader);
 			for (Entry e : Entry.values()) {
